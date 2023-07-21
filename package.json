@@ -6,10 +6,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smwasifzamanomee/redux.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smwasifzamanomee/redux/issues"
+  },
+  "homepage": "https://github.com/smwasifzamanomee/redux#readme",
   "dependencies": {
+    "react-redux": "^8.1.1",
     "redux": "^4.2.1"
   }
 }

@@ -1,53 +1,67 @@
 const { createStore } = require("redux");
+// product constants
+const GET_PRODUCT = "GET_PRODUCT";
+const ADD_PRODUCT = "ADD_PRODUCT";
+const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 
-//constants
-const Increment = "Increment";
-const Decrement = "Decrement";
-const Reset = "Reset";
-//state
-const initialState = 0;
-
-//action creators
-const increment = () => {
-    return {
-        type: Increment,
-    };
-}
-const decrement = () => {
-    return {
-        type: Decrement,
-    };
-}
-const reset = () => {
-    return {
-        type: Reset,
-    };
+//product reducer
+const initialState = {
+    products: ["apple"],
+    count: 1
 }
 
-//reducer
-const counterReducer = (state = initialState, action) => {
+// action 
+const getProduct = () => {
+    return {
+        type: GET_PRODUCT
+    }
+}
+
+const addProduct = (product) => {
+    return {
+        type: ADD_PRODUCT,
+        payload: product
+    }
+}
+
+const removeProduct = (product) => {
+    return {
+        type: REMOVE_PRODUCT,
+        payload: product
+    }
+}
+
+const productReducer = (state = initialState, action) => {
     switch (action.type) {
-        case Increment:
-            return state + 1;
-        case Decrement:
-            return state - 1;
-        case Reset:
-            return initialState;
+        case GET_PRODUCT:
+            return state;
+        case ADD_PRODUCT:
+            return {
+                ...state,
+                products: [...state.products, action.payload],
+                count: state.count + 1
+            }
+        case REMOVE_PRODUCT:
+            return {
+                ...state,
+                products: state.products.filter(product => product !== action.payload),
+                count: state.count - 1
+            }
         default:
             return state;
     }
 }
 
-//store
-const store = createStore(counterReducer);
+const store = createStore(productReducer);
 
 store.subscribe(() => {
     console.log(store.getState());
-}
-);
+})
 
-store.dispatch(increment());
-store.dispatch(increment());
-store.dispatch(decrement());
-store.dispatch(reset());
+store.dispatch(getProduct());
+store.dispatch(addProduct("banana"));
+store.dispatch(addProduct("orange"));
+store.dispatch(removeProduct("banana"));
 
+
+// cart reducer
