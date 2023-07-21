@@ -1,16 +1,30 @@
 const { createStore } = require("redux");
+const { combineReducers } = require("redux");
+
 // product constants
 const GET_PRODUCT = "GET_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 
-//product reducer
+// cart constants
+const GET_CART = "GET_CART";
+const ADD_CART = "ADD_CART";
+const REMOVE_CART = "REMOVE_CART";
+
+
+//product state
 const initialState = {
     products: ["apple"],
     count: 1
 }
 
-// action 
+// cart state
+const initialCartState = {
+    cart: ["apple"],
+    count: 1
+}
+
+// product action 
 const getProduct = () => {
     return {
         type: GET_PRODUCT
@@ -31,6 +45,28 @@ const removeProduct = (product) => {
     }
 }
 
+// cart action
+const getCart = () => {
+    return {
+        type: GET_CART
+    }
+}
+
+const addCart = (product) => {
+    return {
+        type: ADD_CART,
+        payload: product
+    }
+}
+
+const removeCart = (product) => {
+    return {
+        type: REMOVE_CART,
+        payload: product
+    }
+}
+
+// product reducer
 const productReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT:
@@ -52,16 +88,48 @@ const productReducer = (state = initialState, action) => {
     }
 }
 
-const store = createStore(productReducer);
+// cart reducer
+const cartReducer = (state = initialCartState, action) => {
+    switch (action.type) {
+        case GET_CART:
+            return state;
+        case ADD_CART:
+            return {
+                ...state,
+                cart: [...state.cart, action.payload],
+                count: state.count + 1
+            }
+        case REMOVE_CART:
+            return {
+                ...state,
+                cart: state.cart.filter(product => product !== action.payload),
+                count: state.count - 1
+            }
+        default:
+            return state;
+    }
+}
+
+// root reducer
+const rootReducer = combineReducers({
+    productReducer,
+    cartReducer
+})
+
+const store = createStore(rootReducer);
 
 store.subscribe(() => {
     console.log(store.getState());
 })
 
 store.dispatch(getProduct());
-store.dispatch(addProduct("banana"));
-store.dispatch(addProduct("orange"));
-store.dispatch(removeProduct("banana"));
+store.dispatch(addProduct("cherry"));
+store.dispatch(addProduct("barry"));
+store.dispatch(removeProduct("barry"));
+
+store.dispatch(getCart());
+store.dispatch(addCart("banana"));
+store.dispatch(addCart("orange"));
+store.dispatch(removeCart("banana"));
 
 
-// cart reducer
