@@ -19,6 +19,7 @@
   "homepage": "https://github.com/smwasifzamanomee/redux#readme",
   "dependencies": {
     "react-redux": "^8.1.1",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "redux-logger": "^3.0.6"
   }
 }
